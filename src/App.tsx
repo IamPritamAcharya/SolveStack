@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { Layout } from './components/Layout/Layout';
 import { CustomCursor } from './components/CustomCursor';
 import { HeroSection } from './components/HeroSection';
-import { RainBackground } from './components/RainBackground';
+import { BackgroundMesh } from './components/BackgroundMesh';
 import { ProgressPanel, MobileProgressButton } from './features/progress/ProgressPanel';
 import { useSheets } from './features/sheets/hooks/useSheets';
 import { useProgress } from './features/progress/useProgress';
@@ -120,7 +120,7 @@ function AppContent() {
 export default function App() {
   return (
     <ThemeProvider>
-      <RainBackground />
+      <BackgroundMesh />
       <CustomCursor />
       <AppContent />
     </ThemeProvider>

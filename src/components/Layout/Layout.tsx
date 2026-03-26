@@ -33,7 +33,8 @@ export function Layout({
       </div>
 
       <Header
-        onMenuClick={() => setSidebarOpen(true)}
+        onMenuClick={() => setSidebarOpen(prev => !prev)}
+        sidebarOpen={sidebarOpen}
         totalProblems={totalProblems}
         totalTopics={totalTopics}
         totalDone={totalDone}

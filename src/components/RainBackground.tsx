@@ -7,8 +7,14 @@ interface Drop {
   speed: number;
   opacity: number;
   width: number;
+  hue: number;
 }
 
+/**
+ * Rain frost background — slow-falling frosted glass droplet streaks.
+ * Each drop: glowing head + gradient trail fading to transparent.
+ * Very subtle, professional, ~90 drops at ultra-low opacity.
+ */
 export function RainBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -25,16 +31,20 @@ export function RainBackground() {
     resize();
     window.addEventListener('resize', resize);
 
-    // ─── Generate drops ───
-    const DROP_COUNT = 80;
-    const drops: Drop[] = Array.from({ length: DROP_COUNT }, () => ({
-      x:       Math.random() * window.innerWidth,
-      y:       Math.random() * window.innerHeight,
-      len:     12 + Math.random() * 28,    // 12–40px length
-      speed:   0.4 + Math.random() * 0.8,  // slow gentle fall
-      opacity: 0.018 + Math.random() * 0.028, // very subtle
-      width:   0.6 + Math.random() * 0.6,
-    }));
+    const DROP_COUNT = 110;
+
+    const makeDrops = (): Drop[] =>
+      Array.from({ length: DROP_COUNT }, () => ({
+        x:       Math.random() * window.innerWidth,
+        y:       Math.random() * window.innerHeight,
+        len:     18 + Math.random() * 50,                 // 18–68px streak
+        speed:   0.3 + Math.random() * 0.65,              // slow fall
+        opacity: 0.04 + Math.random() * 0.055,            // clearly visible
+        width:   0.8 + Math.random() * 1.0,               // slightly thicker
+        hue:     210 + Math.random() * 80,
+      }));
+
+    const drops = makeDrops();
 
     let rafId: number;
 
@@ -43,27 +53,48 @@ export function RainBackground() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       drops.forEach(d => {
-        // Draw the drop as a short vertical line with gradient fade
-        const grad = ctx.createLinearGradient(d.x, d.y, d.x, d.y + d.len);
-        grad.addColorStop(0, `rgba(180,170,255,0)`);
-        grad.addColorStop(0.5, `rgba(180,170,255,${d.opacity})`);
-        grad.addColorStop(1, `rgba(140,220,255,${d.opacity * 0.5})`);
+        // Glowing head at the bottom of the streak
+        const headX = d.x;
+        const headY = d.y + d.len;
+        const headR = d.width * 2.5;
+
+        // Streak: linear gradient from transparent (top) to colour (bottom)
+        const streak = ctx.createLinearGradient(d.x, d.y, d.x, d.y + d.len);
+        streak.addColorStop(0, `hsla(${d.hue}, 80%, 75%, 0)`);
+        streak.addColorStop(0.6, `hsla(${d.hue}, 80%, 75%, ${d.opacity * 0.5})`);
+        streak.addColorStop(1, `hsla(${d.hue}, 90%, 85%, ${d.opacity})`);
 
         ctx.beginPath();
         ctx.moveTo(d.x, d.y);
         ctx.lineTo(d.x, d.y + d.len);
-        ctx.strokeStyle = grad;
+        ctx.strokeStyle = streak;
         ctx.lineWidth   = d.width;
         ctx.stroke();
 
+        // Soft glowing bead at head
+        const glow = ctx.createRadialGradient(headX, headY, 0, headX, headY, headR * 3);
+        glow.addColorStop(0, `hsla(${d.hue}, 100%, 88%, ${d.opacity * 1.8})`);
+        glow.addColorStop(0.4, `hsla(${d.hue}, 80%, 75%, ${d.opacity * 0.6})`);
+        glow.addColorStop(1, `hsla(${d.hue}, 60%, 60%, 0)`);
+
+        ctx.beginPath();
+        ctx.arc(headX, headY, headR * 3, 0, Math.PI * 2);
+        ctx.fillStyle = glow;
+        ctx.fill();
+
         // Fall
         d.y += d.speed;
-        if (d.y > canvas.height + d.len) {
-          d.y = -d.len;
+        if (d.y > canvas.height + d.len + 10) {
+          d.y = -d.len - 10;
           d.x = Math.random() * canvas.width;
+          d.opacity = 0.022 + Math.random() * 0.04;
+          d.len     = 14 + Math.random() * 38;
+          d.speed   = 0.25 + Math.random() * 0.55;
+          d.hue     = 210 + Math.random() * 80;
         }
       });
     };
+
     tick();
 
     return () => {
@@ -79,7 +110,7 @@ export function RainBackground() {
       style={{
         position: 'fixed',
         inset: 0,
-        zIndex: 0,
+        zIndex: 1,
         pointerEvents: 'none',
         width: '100%',
         height: '100%',

@@ -4,24 +4,28 @@ import './Header.css';
 
 interface Props {
   onMenuClick: () => void;
+  sidebarOpen?: boolean;
   totalProblems?: number;
   totalTopics?: number;
   totalDone?: number;
 }
 
-export function Header({ onMenuClick, totalProblems = 0, totalTopics = 0, totalDone = 0 }: Props) {
+export function Header({ onMenuClick, sidebarOpen = false, totalProblems = 0, totalTopics = 0, totalDone = 0 }: Props) {
   const pct = totalProblems > 0 ? Math.round((totalDone / totalProblems) * 100) : 0;
 
   return (
     <header className="header">
       {/* Left */}
       <div className="header__left">
-        <button className="header__menu-btn" onClick={onMenuClick} aria-label="Open menu">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"
-            strokeLinecap="round" strokeLinejoin="round">
-            <line x1="4" y1="7" x2="20" y2="7" />
-            <line x1="4" y1="17" x2="14" y2="17" />
-          </svg>
+        <button
+          className={`header__menu-btn ${sidebarOpen ? 'header__menu-btn--open' : ''}`}
+          onClick={onMenuClick}
+          aria-label={sidebarOpen ? 'Close menu' : 'Open menu'}
+        >
+          {/* Animated hamburger → X */}
+          <span className="menu-icon">
+            <span /><span />
+          </span>
         </button>
 
         <div className="header__brand">
