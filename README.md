@@ -1,40 +1,91 @@
 # Pritam's DSA Sheet — Problem Tracker
 
-A modern, high-performance DSA (Data Structures & Algorithms) problem tracker with persistent progress tracking, a beautiful UI, and full mobile support.
-
-![Preview](./public/preview.png)
-
-## Live Demo
-
-🚀 [**pritam-s-dsa-sheet.vercel.app**](https://iampritamacharya.github.io/Pritam-s-DSA-Sheet) *(GitHub Pages)*
+A high-performance Data Structures and Algorithms (DSA) problem tracker designed for efficient learning, structured practice, and persistent progress tracking. The application delivers a modern user experience with optimized performance and full mobile responsiveness.
 
 ---
 
-## Features
+## Preview
 
-- **📋 Multiple Sheets** — Organize problems by sheet (e.g., *Problem Solving*, *Interview Prep*), each with its own progress
-- **✅ Progress Tracking** — Tick off solved problems; progress persists in `localStorage` (per sheet, survives browser restarts)
-- **📊 Visual Progress** — SVG ring chart + per-topic progress bars in a right-side panel; floating FAB on mobile that opens a bottom sheet
-- **⚡ Instant Load** — All sheet data is bundled at build time via Vite `import.meta.glob` — zero GitHub API calls, zero network latency
-- **🎨 Modern UI** — Space Grotesk + JetBrains Mono typography, glassmorphism cards, smooth micro-animations
-- **🌌 Three.js Hero** — Interactive particle canvas with connection lines and wireframe 3D shapes inside the hero section
-- **🌧️ Ambient Background** — Subtle rain/frost animated canvas behind all content
-- **🌓 Dark / Light Mode** — Persisted theme toggle
-- **📱 Fully Responsive** — Mobile-first layout with slide-in sidebar, mobile progress bottom sheet
-- **🖱️ Custom Cursor** — Lerp-smooth dot + ring cursor on desktop (hidden on touch devices)
+![Application Preview](https://github.com/IamPritamAcharya/Pritam-s-DSA-Sheet/blob/main/src/assets/page.png)
 
 ---
 
-## Tech Stack
+## Live Application
 
-| Layer | Technology |
-|---|---|
-| Framework | React 18 + TypeScript |
-| Build Tool | Vite 4 |
-| 3D Graphics | Three.js |
-| Styling | Vanilla CSS (no Tailwind) |
-| Fonts | Inter, Space Grotesk, JetBrains Mono (Google Fonts) |
-| Deployment | GitHub Pages (`gh-pages`) |
+**Deployed URL:**
+[https://iampritamacharya.github.io/Pritam-s-DSA-Sheet/](https://iampritamacharya.github.io/Pritam-s-DSA-Sheet/)
+
+---
+
+## Overview
+
+Pritam's DSA Sheet is built to help developers systematically track and solve DSA problems across multiple curated sheets. It eliminates the need for external tools by providing built-in progress tracking, visualization, and seamless navigation across problem sets.
+
+---
+
+## Key Features
+
+### Structured Problem Organization
+
+* Supports multiple sheets (e.g., Problem Solving, Interview Preparation)
+* Each sheet maintains independent progress tracking
+
+### Persistent Progress Tracking
+
+* Track solved problems using a simple checkbox interface
+* Progress is stored in browser localStorage
+* Data persists across sessions without requiring authentication
+
+### Visual Progress Insights
+
+* Circular SVG progress indicator for overall completion
+* Topic-wise progress bars for granular tracking
+* Dedicated progress panel with mobile-friendly bottom sheet
+
+### Optimized Performance
+
+* All sheet data is bundled at build time using Vite
+* No dependency on external APIs
+* Instant load with zero network latency
+
+### Modern User Interface
+
+* Clean typography using Inter, Space Grotesk, and JetBrains Mono
+* Glassmorphism-based card design
+* Smooth animations and transitions
+
+### Interactive Visual Elements
+
+* Three.js-powered hero section with particle effects and 3D elements
+* Ambient animated background for enhanced visual experience
+
+### Theme Support
+
+* Light and dark mode support
+* User preference persisted across sessions
+
+### Responsive Design
+
+* Fully optimized for mobile, tablet, and desktop
+* Mobile-specific UI components including slide-in navigation and bottom sheets
+
+### Enhanced User Interaction
+
+* Custom cursor for desktop users with smooth interpolation
+* Disabled automatically on touch devices
+
+---
+
+## Technology Stack
+
+| Layer      | Technology                           |
+| ---------- | ------------------------------------ |
+| Framework  | React 18 with TypeScript             |
+| Build Tool | Vite                                 |
+| Graphics   | Three.js                             |
+| Styling    | Vanilla CSS                          |
+| Fonts      | Inter, Space Grotesk, JetBrains Mono |
+| Deployment | GitHub Pages (gh-pages)              |
 
 ---
 
@@ -43,86 +94,110 @@ A modern, high-performance DSA (Data Structures & Algorithms) problem tracker wi
 ```
 src/
 ├── components/
-│   ├── Layout/          # Header, Sidebar, Layout wrapper
-│   ├── CustomCursor.tsx # Smooth lerp cursor (desktop only)
-│   ├── HeroSection.tsx  # Three.js hero card
-│   ├── RainBackground.tsx # Full-page rain/frost canvas
-│   ├── ThreeCanvas.tsx  # Three.js canvas (used in hero)
+│   ├── Layout/
+│   ├── CustomCursor.tsx
+│   ├── HeroSection.tsx
+│   ├── RainBackground.tsx
+│   ├── ThreeCanvas.tsx
 │   └── Spinner / EmptyState
 ├── features/
 │   ├── sheets/
-│   │   ├── localSheets.ts  # Vite import.meta.glob — bundles sheets/*.txt
-│   │   ├── parser.ts       # CSV parser → TopicGroup[]
+│   │   ├── localSheets.ts
+│   │   ├── parser.ts
 │   │   └── hooks/useSheets.ts
 │   ├── problems/
-│   │   ├── ProblemCard.tsx  # Card with checkbox + 3D tilt
-│   │   └── TopicGroup.tsx   # Accordion with micro progress bar
+│   │   ├── ProblemCard.tsx
+│   │   └── TopicGroup.tsx
 │   ├── progress/
-│   │   ├── useProgress.ts   # localStorage hook (per sheet)
-│   │   └── ProgressPanel.tsx + MobileProgressButton
+│   │   ├── useProgress.ts
+│   │   └── ProgressPanel.tsx
 │   └── theme/
 │       └── ThemeProvider.tsx
 └── data/
-    └── siteContent.json     # All static page text
+    └── siteContent.json
 ```
 
 ---
 
 ## Adding a New Sheet
 
-1. Create a `.txt` file in `sheets/` — e.g., `sheets/Dynamic Programming.txt`
-2. Format: one problem per line, CSV `URL,Topic,Difficulty`
-3. `Difficulty` can be `easy`, `medium`, or `hard`
-4. Platform is auto-detected from URL (`leetcode.com` → LeetCode, `geeksforgeeks.org` → GFG)
+To add a new problem sheet:
 
-**Example:**
-```
-https://leetcode.com/problems/climbing-stairs/,Dynamic Programming,easy
-https://leetcode.com/problems/coin-change/,Dynamic Programming,medium
-https://leetcode.com/problems/edit-distance/,Dynamic Programming,hard
-```
+1. Create a `.txt` file inside the `sheets/` directory
+   Example: `sheets/Dynamic Programming.txt`
 
-The new sheet appears automatically in the sidebar on the next build — no code changes needed.
+2. Use CSV format:
+
+   ```
+   URL,Topic,Difficulty
+   ```
+
+3. Example:
+
+   ```
+   https://leetcode.com/problems/climbing-stairs/,Dynamic Programming,easy
+   https://leetcode.com/problems/coin-change/,Dynamic Programming,medium
+   https://leetcode.com/problems/edit-distance/,Dynamic Programming,hard
+   ```
+
+4. Supported difficulty values:
+
+   * easy
+   * medium
+   * hard
+
+5. Platform detection is automatic based on URL.
+
+The new sheet will be available automatically after the next build.
 
 ---
 
 ## Local Development
 
 ```bash
-# Clone
 git clone https://github.com/IamPritamAcharya/Pritam-s-DSA-Sheet.git
 cd Pritam-s-DSA-Sheet
 
-# Install dependencies
 npm install
-
-# Start dev server
 npm run dev
-# → http://localhost:5173/Pritam-s-DSA-Sheet/
+```
+
+Access the application at:
+
+```
+http://localhost:5173/Pritam-s-DSA-Sheet/
 ```
 
 ---
 
-## Deployment (GitHub Pages)
+## Deployment
+
+To deploy using GitHub Pages:
 
 ```bash
 npm run deploy
 ```
 
-This runs `npm run build` then `gh-pages -d dist` which pushes the `dist/` folder to the `gh-pages` branch.
+### Manual Setup
 
-**GitHub Pages setup:**
-1. Go to repo **Settings → Pages**
-2. Set source to branch `gh-pages`, folder `/root`
-3. Save — your site will be live at `https://<username>.github.io/Pritam-s-DSA-Sheet/`
+1. Navigate to repository Settings → Pages
+2. Set source to:
 
-Alternatively, the included **GitHub Actions** workflow (`.github/workflows/deploy.yml`) auto-deploys on every push to `main`.
+   * Branch: `gh-pages`
+   * Folder: `/root`
+3. Save changes
+
+### Automated Deployment
+
+A GitHub Actions workflow is included to automatically deploy on every push to the `main` branch.
 
 ---
 
-## Progress Data
+## Data Persistence
 
-Progress is stored exclusively in the browser's `localStorage` — no backend, no account needed. Data format:
+Progress is stored locally in the browser using `localStorage`.
+
+Example format:
 
 ```json
 {
@@ -133,16 +208,20 @@ Progress is stored exclusively in the browser's `localStorage` — no backend, n
 }
 ```
 
-Each sheet's data is keyed separately so clearing one sheet's progress doesn't affect others.
+* Data is stored per sheet
+* No backend or authentication required
+* Clearing browser storage will reset progress
 
 ---
 
-## Customizing UI Text
+## UI Customization
 
-Edit `src/data/siteContent.json` to change labels, the app name, and other static strings without touching component code.
+Static content such as labels, headings, and application text can be modified via:
 
----
+```
+src/data/siteContent.json
+```
 
-## License
+This allows customization without modifying component logic.
 
-MIT © [Pritam Acharya](https://github.com/IamPritamAcharya)
+
