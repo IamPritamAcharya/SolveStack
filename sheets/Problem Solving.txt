@@ -8,3 +8,4 @@ https://leetcode.com/problems/time-needed-to-buy-tickets,arrays,easy
 https://leetcode.com/problems/construct-target-array-with-multiple-sums,heaps,hard
 https://leetcode.com/problems/detect-capital,strings,easy
 https://leetcode.com/problems/repeated-substring-pattern,strings,easy
+https://leetcode.com/problems/odd-even-linked-list,linkedlists,medium
