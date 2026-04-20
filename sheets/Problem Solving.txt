@@ -13,3 +13,4 @@ https://leetcode.com/problems/sum-of-square-numbers,two pointers,easy
 https://leetcode.com/problems/magical-string,two pointers,medium
 https://leetcode.com/problems/find-the-winner-of-an-array-game,simulation,medium
 https://leetcode.com/problems/maximum-distance-between-a-pair-of-values,two pointers,medium
+https://leetcode.com/problems/two-furthest-houses-with-different-colors,arrays,easy
