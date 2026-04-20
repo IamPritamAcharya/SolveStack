@@ -14,3 +14,4 @@ https://leetcode.com/problems/magical-string,two pointers,medium
 https://leetcode.com/problems/find-the-winner-of-an-array-game,simulation,medium
 https://leetcode.com/problems/maximum-distance-between-a-pair-of-values,two pointers,medium
 https://leetcode.com/problems/two-furthest-houses-with-different-colors,arrays,easy
+https://leetcode.com/problems/minimum-number-of-vertices-to-reach-all-nodes,graphs,easy
