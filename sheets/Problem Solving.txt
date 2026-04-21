@@ -16,3 +16,4 @@ https://leetcode.com/problems/maximum-distance-between-a-pair-of-values,two poin
 https://leetcode.com/problems/two-furthest-houses-with-different-colors,arrays,easy
 https://leetcode.com/problems/minimum-number-of-vertices-to-reach-all-nodes,graphs,easy
 https://leetcode.com/problems/minimize-hamming-distance-after-swap-operations,graphs,medium
+https://leetcode.com/problems/island-perimeter/,graphs,easy
